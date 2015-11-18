@@ -60,14 +60,10 @@
             </form>
 
             <div ng-show="userID">
-
                 <div class="answerButton">
                     <label for="answerInput"></label>
                     <input id="answerInput" type="text" ng-model="answerInput">
-                    <button class="btn btn-success" ng-click="teamAnswers()">CLICK ME</button>
-                </div>
-                <div class="secretDiv" ng-show="handle === 'ADP Admin'">
-                    <button class="btn btn-warning" ng-click="clearArray()">CLEAR</button>
+                    <button class="btn btn-success" ng-click="teamAnswers()" type="submit">SUBMIT ANSWER</button>
                 </div>
                 
                 <div>

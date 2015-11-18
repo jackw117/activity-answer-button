@@ -9,6 +9,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.authObj = $firebaseAuth(ref);
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
+    $scope.nameInUse = false;
 
     var authData = $scope.authObj.$getAuth();
 
@@ -52,4 +53,21 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         });
     }
 
+    $scope.checkNames = function() {
+        console.log($scope.users);
+        $scope.nameInUse = false;
+        $scope.users.forEach(function(data) {
+            console.log(data);
+            if (data.handle === $scope.handle) {
+                $scope.nameInUse = true;
+            }
+        });
+        $scope.checkInUse();
+    }
+
+    $scope.checkInUse = function() {
+        if (!$scope.nameInUse) {
+            $scope.signUp();
+        }
+    }
 });

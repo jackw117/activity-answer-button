@@ -56,7 +56,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
 
     $scope.teamAnswers = function() {
     	$scope.answers.$add({
-    		text:$scope.handle,
+    		userID:$scope.userID,
+    		text:$scope.answerInput,
     		time:Firebase.ServerValue.TIMESTAMP
     	});
     }

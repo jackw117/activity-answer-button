@@ -62,6 +62,8 @@
             <div ng-show="userID">
 
                 <div class="answerButton">
+                    <label for="answerInput"></label>
+                    <input id="answerInput" type="text" ng-model="answerInput">
                     <button class="btn btn-success" ng-click="teamAnswers()">CLICK ME</button>
                 </div>
                 <div class="secretDiv" ng-show="handle === 'ADP Admin'">
@@ -69,17 +71,11 @@
                 </div>
                 
                 <div>
-
-                    <!-- Use ng-repeat directive to repeat a div for each element in tweets -->
-                    <div class="tweet-box" ng-repeat="answer in answers | orderBy : 'time'">
+                    <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
-                            <!-- Put in the twitter handle and time of tweet -->
-                            <span class="handle">{{users[answer.userId].handle}}</span>
-                            <span class="time">{{answer.time | date}}</span>
+                            <span class="handle">{{users[answer.userID].handle}}</span>
                         </div>
-
-                        <!-- Put in the text of the tweet -->
-                        <div class="tweet">
+                        <div class="answer">
                             {{answer.text}}
                         </div>
                     </div>

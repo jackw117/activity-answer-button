@@ -33,7 +33,7 @@
             <form name="myForm" ng-show="!userID">
                 <div class="form-group">
                     <label>Pick a Name:</label>
-                    <input ng-model="handle" required name="handle" class="form-control">
+                    <input ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
                 </div>
 
@@ -50,7 +50,7 @@
                 <form name="answerForm">
                     <div class="answerButton">
                         <label for="answerInput">Enter your answer here:</label><br>
-                        <input id="answerInput" type="text" ng-model="answerInput" required><br>
+                        <input id="answerInput" type="text" ng-model="answerInput" required autocomplete="off"><br>
                         <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
                     </div>
                 </form>

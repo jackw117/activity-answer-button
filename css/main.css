@@ -16,3 +16,7 @@ img {
 #happy {
 	width: 50%
 }
+
+.error {
+	color: red;
+}

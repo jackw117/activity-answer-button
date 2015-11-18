@@ -1,0 +1,10 @@
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css");
+
+.showID {
+	text-align: center;
+	font-size: 40px;
+}
+
+img {
+	width: 100%;
+}

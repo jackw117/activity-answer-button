@@ -5,20 +5,86 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta name="author" content="Jack Whitesell, George Ng">
+        <meta name="author" content="Jack Whitesell">
         <meta name="description" content="ADP app for guessing the activity questions">
 
-        <link rel="stylesheet" href="css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
 
-        <script type="text/javascript" src="js/names.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
-        <script src="//www.parsecdn.com/js/parse-1.6.0.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+        <link rel="stylesheet" href="css/main.css"> 
+        <script type="text/javascript" src="js/answer.js"></script>
 
         <title>ADP Answer Button</title>
     </head>
 
-    <body>
+    <body ng-app="myApp" ng-controller="myCtrl"> 
 
+        <header>
+            <div class="showID" ng-show="userID">
+                <p>Team {{handle}}</p>
+            </div>
+        </header>     
+        
+        <!-- Container div -->
+        <div class="container">
+            
+            <!-- Sign-in/sign-up form: show if userId isn't defined -->
+            <form name="myForm" ng-show="!userID" novalidate>
+            
+                <!-- Bind model "handle" to this input, set minimum length, and make it required -->
+                <div class="form-group">
+                    <label>Pick a Group Name:</label>
+                    <input ng-model="handle" ng-minlength="1" name="handle" class="form-control">
+                </div> 
+
+                <div class="form-group">
+                    <label>Enter your email (doesn't have to be real):</label>
+                    <input ng-model="email" name="email" type="email" class="form-control">
+                    <p class="help-block" ng-show="caughtError">{{caughtError}}</p>
+                </div>  
+
+                <div class="form-group">
+                    <label>Pick a password:</label>
+                    <input name="password" type="password" class="form-control" ng-model="password" required>
+                </div>  
+                <!-- Submit buttons: should only be active if certain inputs are valid -->
+                <div class="form-group">
+                    <button ng-click="signUp()" ng-disabled="myForm.$invalid" type="submit" class="btn btn-primary">Sign-up</button>
+                </div>
+
+                <div class="form-group">
+                    <p>The email and password are only there because it is required by the application I am using to store users. Just come up with anything for these. We can only see your group name though, so any jokes you make with these two will be lost.</p>
+                    <img src="img/oshino_shinobu_cute.jpg">
+                </div>
+            </form>
+
+            <div ng-show="userID">
+
+                <div class="answerButton">
+                    <button class="btn btn-success" ng-click="teamAnswers()">CLICK ME</button>
+                </div>
+                <div class="secretDiv" ng-show="handle === 'ADP Admin'">
+                    <button class="btn btn-warning" ng-click="clearArray()">CLEAR</button>
+                </div>
+                
+                <div>
+
+                    <!-- Use ng-repeat directive to repeat a div for each element in tweets -->
+                    <div class="tweet-box" ng-repeat="answer in answers | orderBy : 'time'">
+                        <div>
+                            <!-- Put in the twitter handle and time of tweet -->
+                            <span class="handle">{{users[answer.userId].handle}}</span>
+                            <span class="time">{{answer.time | date}}</span>
+                        </div>
+
+                        <!-- Put in the text of the tweet -->
+                        <div class="tweet">
+                            {{answer.text}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

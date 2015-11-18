@@ -30,7 +30,7 @@
         <div class="container">
             
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
-            <form name="myForm" ng-show="!userID" novalidate>
+            <form name="myForm" ng-show="!userID">
             
                 <!-- Bind model "handle" to this input, set minimum length, and make it required -->
                 <div class="form-group">
@@ -39,22 +39,18 @@
                 </div> 
 
                 <div class="form-group">
-                    <label>Enter your email (doesn't have to be real):</label>
-                    <input ng-model="email" name="email" type="email" class="form-control">
-                    <p class="help-block" ng-show="caughtError">{{caughtError}}</p>
+                    <input ng-model="email" name="email" type="email" value="poop@poop.com" class="ng-hide form-control">
                 </div>  
 
                 <div class="form-group">
-                    <label>Pick a password:</label>
-                    <input name="password" type="password" class="form-control" ng-model="password" required>
+                    <input name="password" type="password" class="ng-hide form-control" ng-model="password" value="" >
                 </div>  
-                <!-- Submit buttons: should only be active if certain inputs are valid -->
                 <div class="form-group">
-                    <button ng-click="signUp()" ng-disabled="myForm.$invalid" type="submit" class="btn btn-primary">Sign-up</button>
+                    <button ng-click="signUp()" type="submit" class="btn btn-primary">Enter</button>
                 </div>
 
                 <div class="form-group">
-                    <p>The email and password are only there because it is required by the application I am using to store users. Just come up with anything for these. We can only see your group name though, so any jokes you make with these two will be lost.</p>
+                    
                     <img src="img/oshino_shinobu_cute.jpg">
                 </div>
             </form>

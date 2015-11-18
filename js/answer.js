@@ -6,7 +6,9 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var answersRef = ref.child("answers");
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
-    $scope.authObj = $firebaseAuth(ref);
+    $scope.authObj = $firebaseAuth(ref);    
+    $scope.ranMail = "email" + (Math.random() * 1000) + "@poop.com";
+    $scope.password = "default";
 
     var authData = $scope.authObj.$getAuth();
 
@@ -14,7 +16,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.signUp = function() {
         // Create user
         $scope.authObj.$createUser({
-            email: $scope.email,
+            email: $scope.ranMail,
             password: $scope.password,       
         })
 
@@ -45,7 +47,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.logIn = function() {
         console.log('log in')
         return $scope.authObj.$authWithPassword({
-            email: $scope.email,
+            email: $scope.ranMail,
             password: $scope.password
         })
     }
@@ -61,4 +63,5 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     		time:Firebase.ServerValue.TIMESTAMP
     	});
     }
+
 });

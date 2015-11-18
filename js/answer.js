@@ -6,8 +6,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var answersRef = ref.child("answers");
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
-    $scope.authObj = $firebaseAuth(ref);    
-    $scope.ranMail = "email" + (Math.random() * 1000) + "@poop.com";
+    $scope.authObj = $firebaseAuth(ref);
+    $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
 
     var authData = $scope.authObj.$getAuth();
@@ -30,17 +30,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
                 handle:$scope.handle
             }
             $scope.users.$save()
-        })
-
-        // Catch any errors
-        .catch(function(error) {
-        	if (error.code === "EMAIL_TAKEN") {
-        		$scope.caughtError = "That email is already in use";
-        	} else if (error.code === "INVALID_EMAIL") {
-        		$scope.caughtError = "That is not a valid email... follow the format of black@blank.com";
-        	} else {
-        		$scope.caughtError = "Some other error with email... there probably aren't any though"
-        	}
         });
     }
 
@@ -52,16 +41,15 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         })
     }
 
-    $scope.setID = function() {
-    	$scope.userID = $scope.handle;
-    }
-
     $scope.teamAnswers = function() {
     	$scope.answers.$add({
     		userID:$scope.userID,
     		text:$scope.answerInput,
     		time:Firebase.ServerValue.TIMESTAMP
-    	});
+    	})
+        .then(function() {
+            $scope.answerInput = "";
+        });
     }
 
 });

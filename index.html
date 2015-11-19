@@ -27,7 +27,7 @@
                 <img id="happy" src="img/1433502754548.jpg">
             </div>
             <div class="container" ng-show="!userID">
-                <button type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
+                <button type="submit" ng-hide="adminClick" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
                 <form name="adminForm" ng-show="adminClick">
                     <!-- <label for="adminName">NAME</label>
                     <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->

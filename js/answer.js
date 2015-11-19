@@ -98,6 +98,12 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         })
     }
 
+    $scope.removeAll = function(data) {
+        $scope.answers.$remove($scope.answers.$getRecord(data)).then(function(answersRef) {
+            answersRef.key() === $scope.answers.$getRecord(data).$id;
+        });
+    }
+
     //make a login button for admins
     //then allow me to increment a value for score
     // $scope.like = function(tweet) {

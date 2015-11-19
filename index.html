@@ -82,6 +82,9 @@
                         <div class="answer">
                             {{answer.text}}
                         </div>
+                        <div ng-show="adminMail != null">
+                            <button id='del' class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="removeAll(answer.text)"></button>
+                        </div>
                     </div>
                 </div>
             </div>

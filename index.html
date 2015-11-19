@@ -21,13 +21,16 @@
     <body ng-app="myApp" ng-controller="myCtrl"> 
 
         <header>
-            <div class="showID" ng-show="userID">
+            <div id="teamID" class="showID" ng-show="userID">
                 <p>Team {{handle}}</p>
             </div>
         </header>     
         
         <!-- Container div -->
         <div class="container">
+            <div id="titleDiv" ng-show="!userID"> 
+                <h1> ADP Answer Page </h1>
+            </div>
             
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
             <form name="myForm" ng-show="!userID">
@@ -55,7 +58,7 @@
                 </div>
             </form>
 
-            <div ng-show="userID">
+            <div id="answerPage" ng-show="userID">
                 <div class="answerButton">
                     <label for="answerInput"></label>
                     <input id="answerInput" type="text" ng-model="answerInput">
@@ -64,11 +67,9 @@
                 
                 <div>
                     <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
-                        <div>
-                            <span class="handle">{{users[answer.userID].handle}}</span>
-                        </div>
                         <div class="answer">
-                            {{answer.text}}
+                            <span class="handle">{{users[answer.userID].handle}}</span>
+                            <p>{{answer.text}}</p>
                         </div>
                     </div>
                 </div>

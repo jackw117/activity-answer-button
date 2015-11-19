@@ -88,7 +88,8 @@
                             <p>{{answer.text}}</p>
                         </div>
                         <div ng-show="adminMail != null">
-                            <button id='del' class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="addPoints(users[answer.userID]"></button>
+                            <button id="increasePoints" class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="addPoints(users[answer.userID])"></button>
+                            <button id="decreasePoints" class="btn-xs" ng-click="decreasePoints(users[answer.userID])"></button>
                         </div>
                     </div>
                 </div>

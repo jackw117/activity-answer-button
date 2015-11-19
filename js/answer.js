@@ -113,6 +113,11 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     //need to fix this one
     $scope.addPoints = function(user) {
         user.points += 1;
-        $scope.users[user].$save();
+        $scope.users.$save();
+    }
+
+    $scope.decreasePoints = function(user) {
+        user.points -= 1;
+        $scope.users.$save();
     }
 });

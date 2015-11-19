@@ -80,16 +80,17 @@
                     <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
                             <span class="handle" ng-hide="admins[answer.userID]">{{users[answer.userID].handle}}</span>
-                            <span class="handle" ng-hide="admins[answer.userID]">{{users[answer.userID].points}}</span>
                             <span class="adminStatus" ng-show="admins[answer.userID]">{{admins[answer.userID].handle}}</span>
                         </div>
 
                         <div class="answer">
-                            <p>{{answer.text}}</p>
+                            <p class="answerText">{{answer.text}}</p>
+                            <p class="points" ng-hide="admins[answer.userID]">Points: {{users[answer.userID].points}}</p>
                         </div>
+
                         <div ng-show="adminMail != null">
                             <button id="increasePoints" class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="addPoints(users[answer.userID])"></button>
-                            <button id="decreasePoints" class="btn-xs" ng-click="decreasePoints(users[answer.userID])"></button>
+                            <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"></button>
                         </div>
                     </div>
                 </div>

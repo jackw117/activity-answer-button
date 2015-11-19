@@ -87,6 +87,10 @@ div span {
 
 }
 
+.answerText {
+	word-wrap: break-word;
+}
+
 .error {
 	color: red;
 }

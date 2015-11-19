@@ -1,27 +1,103 @@
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css");
 
-.showID {
-	text-align: center;
-	font-size: 40px;
+body {
+	background-image : url("../img/donuts.jpg");
+}
+
+form {
+	margin-top: 2em;
 }
 
 img {
 	width: 100%;
 }
 
-.answer {
-	margin-bottom: 2em;
+div img {
+	border-radius : 1em;
+}
+
+h1, #teamID{
+	font-family: "Monaco";
+}
+
+label { 
+	font-size: 20px;
+}
+
+div span {
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 1em;
+	text-decoration: underline;
+}
+
+#adForm {
+	background-color: rgba(251,201,109, .8);
+	border-radius: 1em;
+	padding : 1em;
+}
+
+#adminPass {
+	margin-bottom : 2em;
+}
+
+#answerPage {
+	background-color: rgba(251,201,109, .8);
+	border-radius: 1em;
+	padding: 1em;
+	margin-bottom : 1em;
+}
+
+#aSign {
+	float : right;
+	margin-top: 10px;
 }
 
 #happy {
 	width: 50%
 }
 
+#titleDiv, #teamID {
+	background-color: rgba(251,201,109, .8);
+	border-radius: 1em;
+	font-weight: bold;
+	padding: 1em;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: .2em;
+	margin-top: 2em;
+	text-align: center;
+	text-decoration: underline;
+}
+
+.answer {
+	font-size: 16px;
+	font-family: Helvetica;
+	margin-top: .5em;
+}
+
+.adminStatus {
+	color: purple;
+}
+
+.answer-box { 
+	background-color: white;
+	border-radius: .5em;
+	width: 50%;
+	padding: 1em;
+	margin-top: 2em;
+	margin-bottom: 2em;
+
+}
+
 .error {
 	color: red;
 }
 
-.adminStatus {
-	color: red;
+
+.showID {
+	text-align: center;
 	font-size: 40px;
+	margin-top : 1em;
 }

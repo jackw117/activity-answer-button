@@ -21,14 +21,13 @@
     <body ng-app="myApp" ng-controller="myCtrl"> 
 
         <header>
-            <div class="showID container" ng-show="userID">
+            <div id="teamID" class="showID container" ng-show="userID">
                 <h1>{{handle}}</h1>
                 <h1>{{adminName}}</h1>
-                <img id="happy" src="img/1433502754548.jpg">
             </div>
-            <div class="container" ng-show="!userID">
-                <button type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
-                <form name="adminForm" ng-show="adminClick">
+            <div id="adminPage" class="container" ng-show="!userID">
+                <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
+                <form id="adForm" name="adminForm" ng-show="adminClick">
                     <!-- <label for="adminName">NAME</label>
                     <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->
                     <label for="adminMail">Enter your email:</label>
@@ -39,13 +38,16 @@
                     <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
                     <div>
                         <h2>You aren't an admin... go away</h2>
-                        <img src="img/monogatari_series_second_season-21-senjougahara-senshougahara-disguise-glasses-moustache-comedy.jpg">
+                        <img style="margin-bottom:1em;" src="img/monogatari_series_second_season-21-senjougahara-senshougahara-disguise-glasses-moustache-comedy.jpg">
                     </div>
                 </form>
             </div>
         </header>     
         
         <div class="container">
+            <div id="titleDiv" ng-show="!userID && !adminClick"> 
+                <h1> ADP Answer Page </h1>
+            </div>
             
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
             <form name="myForm" ng-show="!userID && !adminClick">
@@ -64,7 +66,7 @@
                 </div>
             </form>
 
-            <div ng-show="userID">
+            <div id="answerPage" ng-show="userID">
                 <form name="answerForm">
                     <div class="answerButton">
                         <label for="answerInput">Enter your answer here:</label><br>
@@ -79,8 +81,9 @@
                             <span class="handle" ng-hide="users[answer.userID].admin == true">{{users[answer.userID].handle}}</span>
                             <span class="adminStatus" ng-show="users[answer.userID].admin == true">{{users[answer.userID].handle}}</span>
                         </div>
+
                         <div class="answer">
-                            {{answer.text}}
+                            <p>{{answer.text}}</p>
                         </div>
                         <div ng-show="adminMail != null">
                             <button id='del' class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="removeAll(answer.text)"></button>

@@ -23,17 +23,31 @@
         <header>
             <div class="showID container" ng-show="userID">
                 <h1>{{handle}}</h1>
+                <h1>{{adminName}}</h1>
                 <img id="happy" src="img/1433502754548.jpg">
+            </div>
+            <div class="container" ng-show="!userID">
+                <button type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
+                <form name="adminForm" ng-show="adminClick">
+                    <label for="adminName">NAME</label>
+                    <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required>
+                    <label for="adminMail">Enter your email:</label>
+                    <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off">
+                    <label for="adminPass">Enter your password:</label>
+                    <input id="adminPass" class="form-control" ng-model="adminPass" type="password">
+                    <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">SUBMIT</button>
+                    <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
+                </form>
             </div>
         </header>     
         
         <div class="container">
             
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
-            <form name="myForm" ng-show="!userID">
+            <form name="myForm" ng-show="!userID && !adminClick">
                 <div class="form-group">
-                    <label>Pick a Name:</label>
-                    <input ng-model="handle" required name="handle" class="form-control" autocomplete="off">
+                    <label for="handle">Pick a Name:</label>
+                    <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
                 </div>
 
@@ -50,7 +64,7 @@
                 <form name="answerForm">
                     <div class="answerButton">
                         <label for="answerInput">Enter your answer here:</label><br>
-                        <input id="answerInput" type="text" ng-model="answerInput" required autocomplete="off"><br>
+                        <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br>
                         <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
                     </div>
                 </form>
@@ -58,7 +72,8 @@
                 <div>
                     <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
-                            <span class="handle">{{users[answer.userID].handle}}</span>
+                            <span class="handle" ng-hide="users[answer.userID].admin == true">{{users[answer.userID].handle}}</span>
+                            <span class="adminStatus" ng-show="users[answer.userID].admin == true">{{users[answer.userID].handle}}</span>
                         </div>
                         <div class="answer">
                             {{answer.text}}

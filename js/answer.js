@@ -10,6 +10,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
     $scope.nameInUse = false;
+    $scope.adminClick = false;
 
     var authData = $scope.authObj.$getAuth();
 
@@ -22,23 +23,44 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         })
 
         // Once the user is created, call the logIn function
-        .then($scope.logIn)
+        .then($scope.logIn($scope.ranMail, $scope.password))
 
         // Once logged in, set and save the user data
         .then(function(authData) {
             $scope.userID = authData.uid;
             $scope.users[authData.uid] ={
-                handle:$scope.handle
+                handle: $scope.handle,
+                admin: false
             }
             $scope.users.$save()
         });
     }
 
-    $scope.logIn = function() {
-        console.log('log in')
+    $scope.adminSignUp = function() {
+        // Create user
+        $scope.authObj.$createUser({
+            email: $scope.adminMail,
+            password: $scope.adminPass,       
+        })
+
+        // Once the user is created, call the logIn function
+        .then($scope.logIn($scope.adminMail, $scope.adminPass))
+
+        // Once logged in, set and save the user data
+        .then(function(authData) {
+            $scope.userID = authData.uid;
+            $scope.users[authData.uid] ={
+                handle: $scope.adminName,
+                admin: true
+            }
+            $scope.users.$save()
+        });
+    }
+
+    $scope.logIn = function(email, password, status) {
         return $scope.authObj.$authWithPassword({
-            email: $scope.ranMail,
-            password: $scope.password
+            email: email,
+            password: password
         })
     }
 
@@ -54,10 +76,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.checkNames = function() {
-        console.log($scope.users);
         $scope.nameInUse = false;
         $scope.users.forEach(function(data) {
-            console.log(data);
             if (data.handle === $scope.handle) {
                 $scope.nameInUse = true;
             }
@@ -70,4 +90,19 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
             $scope.signUp();
         }
     }
+
+    $scope.adminSignIn = function() {
+        $scope.adminClick = true;
+        $scope.logIn($scope.adminMail, $scope.adminPass).then(function(authData){
+            $scope.userID = authData.uid;
+        })
+    }
+
+    //make a login button for admins
+    //then allow me to increment a value for score
+    // $scope.like = function(tweet) {
+    //     tweet.likes += 1;
+    //     $scope.tweets.$save(tweet)
+    // } 
+    //something like that
 });

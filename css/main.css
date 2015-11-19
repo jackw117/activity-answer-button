@@ -20,3 +20,8 @@ img {
 .error {
 	color: red;
 }
+
+.adminStatus {
+	color: red;
+	font-size: 40px;
+}

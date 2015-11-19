@@ -48,11 +48,6 @@ div span {
 	margin-bottom : 1em;
 }
 
-#aSign {
-	float : right;
-	margin-top: 10px;
-}
-
 #titleDiv, #teamID {
 	background-color: rgba(251,201,109, .8);
 	border-radius: 1em;
@@ -95,6 +90,10 @@ div span {
 	color: red;
 }
 
+.glyphicon {
+	text-decoration: none;
+	margin-bottom: 0em;
+}
 
 .showID {
 	text-align: center;

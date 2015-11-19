@@ -32,7 +32,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
             $scope.userID = authData.uid;
             $scope.users[authData.uid] ={
                 handle: $scope.handle,
-                admin: false
+                points: 0
             }
             $scope.users.$save()
         });
@@ -42,7 +42,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         // Create user
         $scope.authObj.$createUser({
             email: $scope.adminMail,
-            password: $scope.adminPass,       
+            password: $scope.adminPass,    
         })
 
         // Once the user is created, call the logIn function
@@ -51,15 +51,17 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         // Once logged in, set and save the user data
         .then(function(authData) {
             $scope.userID = authData.uid;
-            $scope.users[authData.uid] ={
-                handle: $scope.adminName,
-                admin: true
+            console.log($scope.admins[authData.uid])
+            $scope.admins[authData.uid] ={
+                handle: $scope.adminName
             }
-            $scope.users.$save()
+            $scope.getName = $scope.admins[authData.uid].handle;
+            console.log($scope.getName)
+            $scope.admins.$save()
         });
     }
 
-    $scope.logIn = function(email, password, status) {
+    $scope.logIn = function(email, password) {
         return $scope.authObj.$authWithPassword({
             email: email,
             password: password
@@ -97,20 +99,20 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         $scope.adminClick = true;
         $scope.logIn($scope.adminMail, $scope.adminPass).then(function(authData){
             $scope.userID = authData.uid;
+            $scope.getName = $scope.admins[authData.uid].handle;
         })
     }
 
+    //this doesn't work
     $scope.removeAll = function(data) {
         $scope.answers.$remove($scope.answers.$getRecord(data)).then(function(answersRef) {
             answersRef.key() === $scope.answers.$getRecord(data).$id;
         });
     }
 
-    //make a login button for admins
-    //then allow me to increment a value for score
-    // $scope.like = function(tweet) {
-    //     tweet.likes += 1;
-    //     $scope.tweets.$save(tweet)
-    // } 
-    //something like that
+    //need to fix this one
+    $scope.addPoints = function(user) {
+        user.points += 1;
+        $scope.users[user].$save();
+    }
 });

@@ -23,8 +23,9 @@
         <header>
             <div id="teamID" class="showID container" ng-show="userID">
                 <h1>{{handle}}</h1>
-                <h1>{{adminName}}</h1>
+                <h1>{{getName}}</h1>
             </div>
+
             <div id="adminPage" class="container" ng-show="!userID">
                 <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
                 <form id="adForm" name="adminForm" ng-show="adminClick">
@@ -78,15 +79,16 @@
                 <div>
                     <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
-                            <span class="handle" ng-hide="users[answer.userID].admin == true">{{users[answer.userID].handle}}</span>
-                            <span class="adminStatus" ng-show="users[answer.userID].admin == true">{{users[answer.userID].handle}}</span>
+                            <span class="handle" ng-hide="admins[answer.userID]">{{users[answer.userID].handle}}</span>
+                            <span class="handle" ng-hide="admins[answer.userID]">{{users[answer.userID].points}}</span>
+                            <span class="adminStatus" ng-show="admins[answer.userID]">{{admins[answer.userID].handle}}</span>
                         </div>
 
                         <div class="answer">
                             <p>{{answer.text}}</p>
                         </div>
                         <div ng-show="adminMail != null">
-                            <button id='del' class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="removeAll(answer.text)"></button>
+                            <button id='del' class='btn-xs btn-danger glyphicon glyphicon-remove' ng-click="addPoints(users[answer.userID]"></button>
                         </div>
                     </div>
                 </div>

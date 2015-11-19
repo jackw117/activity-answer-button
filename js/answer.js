@@ -13,6 +13,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.password = "default";
     $scope.nameInUse = false;
     $scope.adminClick = false;
+    $scope.isAdmin = false;
 
     var authData = $scope.authObj.$getAuth();
 
@@ -59,6 +60,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
             console.log($scope.getName)
             $scope.admins.$save()
         });
+        $scope.isAdmin = true;
     }
 
     $scope.logIn = function(email, password) {
@@ -100,17 +102,22 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         $scope.logIn($scope.adminMail, $scope.adminPass).then(function(authData){
             $scope.userID = authData.uid;
             $scope.getName = $scope.admins[authData.uid].handle;
-        })
-    }
-
-    //this doesn't work
-    $scope.removeAll = function(data) {
-        $scope.answers.$remove($scope.answers.$getRecord(data)).then(function(answersRef) {
-            answersRef.key() === $scope.answers.$getRecord(data).$id;
+            $scope.isAdmin = true;
         });
     }
 
-    //need to fix this one
+    $scope.remove = function(data) {
+        $scope.answers.$remove(data)
+        $scope.answers.$save();
+    }
+
+    $scope.removeAll = function() {
+        $scope.answers.forEach(function(data) {
+            $scope.answers.$remove(data);
+            $scope.answers.$save();
+        });
+    }
+
     $scope.addPoints = function(user) {
         user.points += 1;
         $scope.users.$save();

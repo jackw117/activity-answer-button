@@ -22,8 +22,7 @@
 
         <header>
             <div id="teamID" class="showID container" ng-show="userID">
-                <h1>{{handle}}</h1>
-                <h1>{{getName}}</h1>
+                <h1>Question: {{question}}</h1>
             </div>
 
             <div id="adminPage" class="container" ng-show="!userID">
@@ -71,11 +70,20 @@
             <div id="answerPage" ng-show="userID">
                 <form name="answerForm">
                     <div class="answerButton">
-                        <label for="answerInput">Enter your answer here:</label><br>
-                        <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br>
+                        <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label><br>
+                        <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
+                        <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
                         <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
                     </div>
                 </form>
+
+                <div class="adminControls">
+                    <div ng-show="isAdmin">
+                        <label for="questionInput">Enter question here:</label><br>
+                        <input id="questionInput" class="form-control" type="text" ng-model="question" autocomplete="off">
+                        <button class="btn btn-warning" ng-click="removeAll()">DELETE ALL ANSWERS</button>
+                    </div>
+                </div>
                 
                 <div>
                     <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
@@ -89,9 +97,15 @@
                             <p class="points" ng-hide="admins[answer.userID]">Points: {{users[answer.userID].points}}</p>
                         </div>
 
-                        <div ng-show="adminMail != null && !admins[answer.userID]">
-                            <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                            <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        <div ng-show="isAdmin">
+                            <div ng-show="!admins[answer.userID]">
+                                <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-warning" ng-click="remove(answer)">DELETE</button>
+                            </div>
                         </div>
                     </div>
                 </div>

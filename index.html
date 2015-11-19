@@ -29,14 +29,18 @@
             <div class="container" ng-show="!userID">
                 <button type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
                 <form name="adminForm" ng-show="adminClick">
-                    <label for="adminName">NAME</label>
-                    <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required>
+                    <!-- <label for="adminName">NAME</label>
+                    <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->
                     <label for="adminMail">Enter your email:</label>
                     <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off">
                     <label for="adminPass">Enter your password:</label>
                     <input id="adminPass" class="form-control" ng-model="adminPass" type="password">
                     <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">SUBMIT</button>
                     <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
+                    <div>
+                        <h2>You aren't an admin... go away</h2>
+                        <img src="img/monogatari_series_second_season-21-senjougahara-senshougahara-disguise-glasses-moustache-comedy.jpg">
+                    </div>
                 </form>
             </div>
         </header>     

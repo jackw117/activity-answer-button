@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta name="author" content="Jack Whitesell">
+        <meta name="author" content="Jack Whitesell, George Ng">
         <meta name="description" content="ADP app for guessing the activity questions">
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="css/main.css"> 
         <script type="text/javascript" src="js/answer.js"></script>
 
-        <title>ADP Answer Button</title>
+        <title>ADP Answer Page</title>
     </head>
 
     <body ng-app="myApp" ng-controller="myCtrl"> 
@@ -31,9 +31,9 @@
                     <!-- <label for="adminName">NAME</label>
                     <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->
                     <label for="adminMail">Enter your email:</label>
-                    <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off">
+                    <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off" required>
                     <label for="adminPass">Enter your password:</label>
-                    <input id="adminPass" class="form-control" ng-model="adminPass" type="password">
+                    <input id="adminPass" class="form-control" ng-model="adminPass" type="password" required>
                     <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">SUBMIT</button>
                     <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
                     <div>
@@ -50,9 +50,9 @@
             </div>
             
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
-            <form name="myForm" ng-show="!userID && !adminClick">
+            <form id="myForm" name="myForm" ng-show="!userID && !adminClick">
                 <div class="form-group">
-                    <label for="handle">Pick a Name:</label>
+                    <label for="handle">Pick a Group Name:</label>
                     <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
                 </div>

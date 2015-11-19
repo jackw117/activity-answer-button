@@ -41,7 +41,7 @@ div span {
 	margin-bottom : 2em;
 }
 
-#answerPage {
+#answerPage, #myForm {
 	background-color: rgba(251,201,109, .8);
 	border-radius: 1em;
 	padding: 1em;
@@ -51,10 +51,6 @@ div span {
 #aSign {
 	float : right;
 	margin-top: 10px;
-}
-
-#happy {
-	width: 50%
 }
 
 #titleDiv, #teamID {
@@ -84,7 +80,7 @@ div span {
 .answer-box { 
 	background-color: white;
 	border-radius: .5em;
-	width: 50%;
+	width: 100%;
 	padding: 1em;
 	margin-top: 2em;
 	margin-bottom: 2em;

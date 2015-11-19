@@ -4,8 +4,10 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var ref = new Firebase('https://adp-answer-button.firebaseio.com/');
     var usersRef = ref.child("users");
     var answersRef = ref.child("answers");
+    var adminRef = ref.child("admins");
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
+    $scope.admins = $firebaseObject(adminRef);
     $scope.authObj = $firebaseAuth(ref);
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";

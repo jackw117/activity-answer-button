@@ -5,15 +5,18 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var usersRef = ref.child("users");
     var answersRef = ref.child("answers");
     var adminRef = ref.child("admins");
+    var questionRef = ref.child("questions");
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
     $scope.admins = $firebaseObject(adminRef);
+    $scope.questions = $firebaseArray(questionRef);
     $scope.authObj = $firebaseAuth(ref);
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
     $scope.nameInUse = false;
     $scope.adminClick = false;
     $scope.isAdmin = false;
+    
 
     var authData = $scope.authObj.$getAuth();
 
@@ -71,6 +74,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.teamAnswers = function() {
+        console.log($scope.questions);
     	$scope.answers.$add({
     		userID:$scope.userID,
     		text:$scope.answerInput,
@@ -79,6 +83,22 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         .then(function() {
             $scope.answerInput = "";
         });
+    }
+
+    $scope.newQuestion = function() {
+        $scope.questions.$remove($scope.questions[0]);
+        $scope.questions.$save();
+        $scope.questions.$add({
+            text:$scope.questionInput
+        })
+        .then(function() {
+            $scope.questionInput = "";
+        });
+    }
+
+    $scope.removeQuestion = function() {
+        $scope.questions.$remove($scope.questions[0]);
+        $scope.questions.$save();
     }
 
     $scope.checkNames = function() {
@@ -101,7 +121,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         $scope.adminClick = true;
         $scope.logIn($scope.adminMail, $scope.adminPass).then(function(authData){
             $scope.userID = authData.uid;
-            $scope.getName = $scope.admins[authData.uid].handle;
             $scope.isAdmin = true;
         });
     }
@@ -127,4 +146,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         user.points -= 1;
         $scope.users.$save();
     }
+
+    //make a questions function that adds a question to firebase
 });

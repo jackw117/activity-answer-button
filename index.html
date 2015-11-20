@@ -22,25 +22,7 @@
 
         <header>
             <div id="teamID" class="showID container" ng-show="userID">
-                <h1>Question: {{question}}</h1>
-            </div>
-
-            <div id="adminPage" class="container" ng-show="!userID">
-                
-                <form id="adForm" name="adminForm" ng-show="adminClick">
-                    <!-- <label for="adminName">NAME</label>
-                    <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->
-                    <label for="adminMail">Enter your email:</label>
-                    <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off" required>
-                    <label for="adminPass">Enter your password:</label>
-                    <input id="adminPass" class="form-control" ng-model="adminPass" type="password" required>
-                    <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">SUBMIT</button>
-                    <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
-                    <div>
-                        <h2>You aren't an admin... go away</h2>
-                        <img style="margin-bottom:1em;" src="img/monogatari_series_second_season-21-senjougahara-senshougahara-disguise-glasses-moustache-comedy.jpg">
-                    </div>
-                </form>
+                <h1>Question: {{questions[0].text}}</h1>
             </div>
         </header>     
         
@@ -55,9 +37,6 @@
                     <label for="handle">Pick a Group Name:</label>
                     <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
-                </div>
-
-                <div class="form-group">
                     <button ng-click="checkNames()" type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary">Enter</button>
                     <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
                 </div>
@@ -67,10 +46,25 @@
                 </div>
             </form>
 
+            <form id="adForm" name="adminForm" ng-show="adminClick && !userID">
+                <!-- <label for="adminName">NAME</label>
+                <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->
+                <label for="adminMail">Enter your email:</label>
+                <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off" required>
+                <label for="adminPass">Enter your password:</label>
+                <input id="adminPass" class="form-control" ng-model="adminPass" type="password" required>
+                <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">SUBMIT</button>
+                <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
+                <div>
+                    <h2>You aren't an admin... go away</h2>
+                    <img src="img/11222148_1687453761487140_4636548506213417227_o.jpg">
+                </div>
+            </form>
+
             <div id="answerPage" ng-show="userID">
-                <form name="answerForm">
+                <form name="answerForm" ng-hide="questions.length == 0">
                     <div class="answerButton">
-                        <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label><br>
+                        <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label>
                         <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
                         <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
                         <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
@@ -79,17 +73,22 @@
 
                 <div class="adminControls">
                     <div ng-show="isAdmin">
-                        <label for="questionInput">Enter question here:</label><br>
-                        <input id="questionInput" class="form-control" type="text" ng-model="question" autocomplete="off">
-                        <button class="btn btn-warning" ng-click="removeAll()">DELETE ALL ANSWERS</button>
+                        <form name="questionForm">
+                            <label for="questionInput">Enter question here:</label><br>
+                            <input id="questionInput" class="form-control" type="text" ng-model="questionInput" autocomplete="off"><br>
+                            <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">SUBMIT QUESTION</button>
+                        </form>
+                        <button id="deleteAll" class="btn btn-warning" ng-click="removeAll()">DELETE ALL ANSWERS</button>
+                        <button id="deletQuestion" class="btn btn-warning" ng-click="removeQuestion()">DELETE QUESTION</button>
                     </div>
                 </div>
                 
                 <div>
                     <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
-                            <span class="handle" ng-hide="admins[answer.userID]">{{users[answer.userID].handle}}</span>
+                            <span class="handle" ng-hide="admins[answer.userID] || users[answer.userID].handle === handle">{{users[answer.userID].handle}}</span>
                             <span class="adminStatus" ng-show="admins[answer.userID]">{{admins[answer.userID].handle}}</span>
+                            <span id="currentUser" ng-show="users[answer.userID].handle === handle">{{users[answer.userID].handle}}</span>
                         </div>
 
                         <div class="answer">
@@ -98,7 +97,7 @@
                         </div>
 
                         <div ng-show="isAdmin">
-                            <div ng-show="!admins[answer.userID]">
+                            <div id="pointsDiv" ng-show="!admins[answer.userID]">
                                 <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-up"></span></button>
                                 <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-down"></span></button>
                             </div>
@@ -108,6 +107,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div ng-show="questions.length == 0">
+                    <h2>Yui is sleeping now... come back later</h2>
+                    <img src="img/Hirasawa.Yui.full.224256.jpg">
                 </div>
             </div>
         </div>

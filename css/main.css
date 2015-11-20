@@ -5,11 +5,13 @@ body {
 }
 
 form {
-	margin-top: 2em;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 img {
 	width: 100%;
+	margin-bottom: 1em;
 }
 
 div img {
@@ -28,7 +30,10 @@ div span {
 	font-weight: bold;
 	font-size: 20px;
 	margin-bottom: 1em;
-	text-decoration: underline;
+}
+
+div button {
+	margin-right: 2em;
 }
 
 #adForm {
@@ -37,8 +42,8 @@ div span {
 	padding : 1em;
 }
 
-#adminPass {
-	margin-bottom : 2em;
+#adForm input {
+	margin-bottom: 1em;
 }
 
 #answerPage, #myForm {
@@ -46,6 +51,18 @@ div span {
 	border-radius: 1em;
 	padding: 1em;
 	margin-bottom : 1em;
+}
+
+#currentUser {
+	color: blue;
+}
+
+#handle {
+	margin-bottom: 1em;
+}
+
+#pointsDiv {
+	margin-bottom: 1em;
 }
 
 #titleDiv, #teamID {
@@ -57,9 +74,7 @@ div span {
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: .2em;
-	margin-top: 2em;
 	text-align: center;
-	text-decoration: underline;
 }
 
 .answer {
@@ -88,10 +103,10 @@ div span {
 
 .error {
 	color: red;
+	margin-bottom: 1em;
 }
 
 .glyphicon {
-	text-decoration: none;
 	margin-bottom: 0em;
 }
 

@@ -22,17 +22,13 @@
 
         <div class="container">
             <header>
-                <div id="teamID" class="showID container" ng-show="userID">
-                    <h1>Question: {{questions[0].text}}</h1>
+                <div id="teamID" class="showID container" ng-show="userID && questions.length != 0">
+                    <h1>{{questions[0].text}}</h1>
                 </div>
             </header>
         </div>     
         
         <div class="container">
-            <div id="titleDiv" ng-show="!userID && !adminClick"> 
-                <h1>ADP Answer Page</h1>
-            </div>
-            
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
             <form id="myForm" name="myForm" ng-show="!userID && !adminClick">
                 <div class="form-group">

@@ -42,6 +42,10 @@ div button {
 	margin-bottom: 1em;
 }
 
+#answerPage {
+	margin-top: 1em;
+}
+
 #answerPage, #myForm {
 	background-color: rgba(251,201,109, .8);
 	border-radius: 1em;

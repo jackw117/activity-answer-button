@@ -18,10 +18,6 @@ div img {
 	border-radius : 1em;
 }
 
-h1, #teamID{
-	font-family: "Monaco";
-}
-
 label { 
 	font-size: 20px;
 }
@@ -79,7 +75,6 @@ div button {
 
 .answer {
 	font-size: 16px;
-	font-family: Helvetica;
 	margin-top: .5em;
 }
 

@@ -38,7 +38,7 @@
                     <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
                     <button ng-click="checkNames()" type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary">Enter</button>
-                    <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminSignIn()" class="btn btn-success">ADMIN SIGN IN</button>
+                    <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminClick = true" class="btn btn-success">ADMIN SIGN IN</button>
                 </div>
 
                 <div class="form-group"> 

@@ -118,7 +118,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.adminSignIn = function() {
-        $scope.adminClick = true;
         $scope.logIn($scope.adminMail, $scope.adminPass).then(function(authData){
             $scope.userID = authData.uid;
             $scope.isAdmin = true;

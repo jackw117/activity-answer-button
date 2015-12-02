@@ -24,6 +24,7 @@
             <header>
                 <div id="teamID" class="showID container" ng-show="userID && questions.length != 0">
                     <h1>{{questions[0].text}}</h1>
+                    <h1 ng-show="winner.length != 0">{{winner[0].user}}</h1>
                 </div>
             </header>
         </div>     
@@ -76,7 +77,7 @@
                             <input id="questionInput" class="form-control" type="text" ng-model="questionInput" autocomplete="off"><br>
                             <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">SUBMIT QUESTION</button>
                         </form>
-                        <button id="deleteAll" class="btn btn-warning" ng-click="removeAll()">DELETE ALL ANSWERS</button>
+                        <button id="deleteAll" class="btn btn-warning" ng-click="removeAll(); removeWinner()">DELETE ALL ANSWERS</button>
                         <button id="deletQuestion" class="btn btn-warning" ng-click="removeQuestion()">DELETE QUESTION</button>
                     </div>
                 </div>
@@ -96,7 +97,7 @@
 
                         <div ng-show="isAdmin">
                             <div id="pointsDiv" ng-show="!admins[answer.userID]">
-                                <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID]); newWinner(users[answer.userID])"><span class="glyphicon glyphicon-arrow-up"></span></button>
                                 <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-down"></span></button>
                             </div>
 

@@ -6,10 +6,12 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var answersRef = ref.child("answers");
     var adminRef = ref.child("admins");
     var questionRef = ref.child("questions");
+    var winnerRef = ref.child("winner");
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
     $scope.admins = $firebaseObject(adminRef);
     $scope.questions = $firebaseArray(questionRef);
+    $scope.winner = $firebaseArray(winnerRef);
     $scope.authObj = $firebaseAuth(ref);
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
@@ -55,16 +57,15 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         // Once logged in, set and save the user data
         .then(function(authData) {
             $scope.userID = authData.uid;
-            console.log($scope.admins[authData.uid])
             $scope.admins[authData.uid] ={
                 handle: $scope.adminName
             }
             $scope.getName = $scope.admins[authData.uid].handle;
-            console.log($scope.getName)
-            $scope.admins.$save()
+            $scope.admins.$save();
+            $scope.isAdmin = true;
         });
-        $scope.isAdmin = true;
     }
+        
 
     $scope.logIn = function(email, password) {
         return $scope.authObj.$authWithPassword({
@@ -74,7 +75,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.teamAnswers = function() {
-        console.log($scope.questions);
     	$scope.answers.$add({
     		userID:$scope.userID,
     		text:$scope.answerInput,
@@ -85,9 +85,20 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         });
     }
 
+    $scope.newWinner = function(user) {
+        $scope.removeWinner();
+        $scope.winner.$add({
+            user: user.handle
+        });
+    }
+
+    $scope.removeWinner = function() {
+        $scope.winner.$remove($scope.winner[0]);
+        $scope.winner.$save();
+    }
+
     $scope.newQuestion = function() {
-        $scope.questions.$remove($scope.questions[0]);
-        $scope.questions.$save();
+        $scope.removeQuestion();
         $scope.questions.$add({
             text:$scope.questionInput
         })
@@ -125,14 +136,14 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.remove = function(data) {
-        $scope.answers.$remove(data)
+        $scope.answers.$remove(data);
+        $scope.users.$save();
         $scope.answers.$save();
     }
 
     $scope.removeAll = function() {
         $scope.answers.forEach(function(data) {
-            $scope.answers.$remove(data);
-            $scope.answers.$save();
+            $scope.remove(data);
         });
     }
 
@@ -145,6 +156,4 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         user.points -= 1;
         $scope.users.$save();
     }
-
-    //make a questions function that adds a question to firebase
 });

@@ -79,7 +79,22 @@
                         </form>
                         <button id="deleteAll" class="btn btn-warning" ng-click="removeAll(); removeWinner()">DELETE ALL ANSWERS</button>
                         <button id="deletQuestion" class="btn btn-warning" ng-click="removeQuestion()">DELETE QUESTION</button>
+                        <button ng-show="!showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = true">SHOW SCOREBOARD</button>
+                        <button ng-show="showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = false">HIDE SCOREBOARD</button>
                     </div>
+                </div>
+
+                <div class="scoreboard" ng-show="showScoreboard">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Points</th>
+                        </tr>
+                        <tr ng-repeat="user in users | orderBy : 'points'">
+                            <td>{{user.handle}}</td>
+                            <td>{{user.points}}</td>
+                        </tr>
+                    </table>
                 </div>
                 
                 <div>

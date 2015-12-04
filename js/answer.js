@@ -18,6 +18,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.nameInUse = false;
     $scope.adminClick = false;
     $scope.isAdmin = false;
+    $scope.showScoreboard = false;
     
 
     var authData = $scope.authObj.$getAuth();

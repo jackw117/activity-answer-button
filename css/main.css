@@ -77,6 +77,10 @@ div button {
 	text-align: center;
 }
 
+#winnerName {
+	color: red;
+}
+
 .answer {
 	font-size: 16px;
 	margin-top: .5em;

@@ -24,6 +24,7 @@
             <header>
                 <div id="teamID" class="showID container" ng-show="userID && questions.length != 0">
                     <h1>{{questions[0].text}}</h1>
+                    <img src="{{img[0].image}}">
                     <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
                 </div>
             </header>
@@ -61,26 +62,48 @@
             </form>
 
             <div id="answerPage" ng-show="userID">
-                <form name="answerForm" ng-hide="questions.length == 0">
-                    <div class="answerButton">
-                        <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label>
-                        <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
-                        <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
-                        <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
-                    </div>
-                </form>
+                <div id="memberDiv" ng-hide="questions.length == 0">
+                    <form name="answerForm" ng-hide="teamMemberClick">
+                        <div class="answerButton">
+                            <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label>
+                            <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
+                            <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
+                            <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
+                        </div>
+                    </form>
+                    <button class="btn btn-info" ng-click="teamMemberClick = true" type="submit">Add a person to your team</button>
 
-                <div class="adminControls">
-                    <div ng-show="isAdmin">
+                    <div ng-show="teamMemberClick">
+                        <form name="memberForm">
+                            <label for="memberName">Name (first and last):</label>
+                            <input id="memberName" class="form-control" type="text" ng-model="memberName" autocomplete="off" required>
+                            <button class="btn btn-success" ng-click="addTeamMember()" type="submit" ng-disabled="memberForm.$invalid">Add Member</button>
+                        </form>
+                        <button class="btn btn-warning" ng-click="teamMemberClick = false">Go Back</button>
+                    </div>
+                </div>
+                
+
+                <div class="adminControls" ng-show="isAdmin">
+                    <div>
                         <form name="questionForm">
                             <label for="questionInput">Enter question here:</label><br>
                             <input id="questionInput" class="form-control" type="text" ng-model="questionInput" autocomplete="off"><br>
                             <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">SUBMIT QUESTION</button>
                         </form>
                         <button id="deleteAll" class="btn btn-warning" ng-click="removeAll(); removeWinner()">DELETE ALL ANSWERS</button>
-                        <button id="deletQuestion" class="btn btn-warning" ng-click="removeQuestion()">DELETE QUESTION</button>
+                        <button id="deleteQuestion" class="btn btn-warning" ng-click="removeQuestion()">DELETE QUESTION</button>
+                        <button class="btn btn-warning" ng-click="removeImg()">REMOVE IMAGE</button>
                         <button ng-show="!showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = true">SHOW SCOREBOARD</button>
                         <button ng-show="showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = false">HIDE SCOREBOARD</button>
+                    </div>
+
+                    <div>
+                        <form name="imgForm">
+                            <label for="image">Pick an image:</label>
+                            <input id="image" class="form-control" type="file" fileread="image">
+                            <button class="btn btn-primary" ng-click="addImg()" type="submit" ng-disabled="imgForm.$invalid">SUBMIT</button>
+                        </form>
                     </div>
                 </div>
 

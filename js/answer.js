@@ -7,18 +7,24 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var adminRef = ref.child("admins");
     var questionRef = ref.child("questions");
     var winnerRef = ref.child("winner");
+    var imgRef = ref.child("img");
+
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
     $scope.admins = $firebaseObject(adminRef);
     $scope.questions = $firebaseArray(questionRef);
     $scope.winner = $firebaseArray(winnerRef);
+    $scope.img = $firebaseArray(imgRef);
+
     $scope.authObj = $firebaseAuth(ref);
+
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
     $scope.nameInUse = false;
     $scope.adminClick = false;
     $scope.isAdmin = false;
     $scope.showScoreboard = false;
+    $scope.teamMemberClick = false;
     
 
     var authData = $scope.authObj.$getAuth();
@@ -39,7 +45,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
             $scope.userID = authData.uid;
             $scope.users[authData.uid] ={
                 handle: $scope.handle,
-                points: 0
+                points: 0,
+                members: ""
             }
             $scope.users.$save()
         });
@@ -67,7 +74,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         });
     }
         
-
     $scope.logIn = function(email, password) {
         return $scope.authObj.$authWithPassword({
             email: email,
@@ -157,4 +163,48 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         user.points -= 1;
         $scope.users.$save();
     }
+
+    $scope.removeImg = function() {
+        $scope.img.$remove($scope.img[0]);
+        $scope.img.$save();
+    }
+
+    $scope.addImg = function() {
+        $scope.removeImg();
+        $scope.img.$add({
+            image: $scope.image
+        })
+    }
+
+    $scope.addTeamMember = function() {
+        var current = $scope.users[$scope.userID].members;
+        if (current.length === 0) {
+            $scope.users[$scope.userID].members = $scope.memberName;
+        } else {
+            $scope.users[$scope.userID].members = current + ", " + $scope.memberName;
+        }
+        $scope.users.$save()
+        .then(function() {
+            $scope.memberName = "";
+        })
+    }
 });
+
+myApp.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);

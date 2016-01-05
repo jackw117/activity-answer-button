@@ -63,16 +63,17 @@
 
             <div id="answerPage" ng-show="userID">
                 <div id="memberDiv" ng-hide="questions.length == 0">
-                    <form name="answerForm" ng-hide="teamMemberClick">
-                        <div class="answerButton">
+                    <div class="answerButton" ng-hide="teamMemberClick || checkMembersClick">
+                        <form name="answerForm">
                             <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label>
                             <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
                             <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
                             <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
-                        </div>
-                    </form>
-                    <button class="btn btn-info" ng-click="teamMemberClick = true" type="submit">Add a person to your team</button>
+                        </form>
+                        <button class="btn btn-info" ng-click="teamMemberClick = true" type="submit">Add a person to your team</button>
 
+                    </div>
+                    
                     <div ng-show="teamMemberClick">
                         <form name="memberForm">
                             <label for="memberName">Name (first and last):</label>
@@ -81,6 +82,10 @@
                         </form>
                         <button class="btn btn-warning" ng-click="teamMemberClick = false">Go Back</button>
                     </div>
+                    <p ng-show="users[userID].members.length != 0">The current members on your team are:</p>
+                    <ol>
+                        <li ng-repeat="member in teamMembers">{{member}}</li>
+                    </ol>
                 </div>
                 
 
@@ -111,10 +116,12 @@
                     <table>
                         <tr>
                             <th>Name</th>
+                            <th>Members</th>
                             <th>Points</th>
                         </tr>
                         <tr ng-repeat="user in users | orderBy : 'points'">
                             <td>{{user.handle}}</td>
+                            <td>{{user.members}}</td>
                             <td>{{user.points}}</td>
                         </tr>
                     </table>

@@ -25,8 +25,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.isAdmin = false;
     $scope.showScoreboard = false;
     $scope.teamMemberClick = false;
+    $scope.teamMembers = [];
     
-
     var authData = $scope.authObj.$getAuth();
 
     // SignUp function
@@ -186,7 +186,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         $scope.users.$save()
         .then(function() {
             $scope.memberName = "";
-        })
+        });
+        $scope.teamMembers.push($scope.memberName);
     }
 });
 

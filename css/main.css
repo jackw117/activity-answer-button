@@ -45,7 +45,12 @@ th {
 }
 
 tr {
-	margin-bottom: 1em;
+	border-style: solid;
+}
+
+td {
+	padding-top: 1em;
+	padding-bottom: 1em;
 }
 
 #adForm {
@@ -129,8 +134,19 @@ tr {
 	margin-bottom: 0em;
 }
 
+.scoreboard {
+	width: 50%;
+	margin: 0 auto;
+}
+
 .showID {
 	text-align: center;
 	font-size: 40px;
 	margin-top : 1em;
+}
+
+@media print {
+    html, body {
+       display: none;
+    }
 }

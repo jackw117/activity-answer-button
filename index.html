@@ -24,7 +24,9 @@
             <header>
                 <div id="teamID" class="showID container" ng-show="userID && questions.length != 0">
                     <h1>{{questions[0].text}}</h1>
-                    <img draggable="false" src="{{img[0].image}}">
+                    <div id="guessImg">
+                        <img draggable="false" src="{{img[0].image}}">
+                    </div>
                     <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
                 </div>
             </header>

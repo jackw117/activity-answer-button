@@ -2,7 +2,6 @@
 
 body {
 	background-image : url("../img/donuts.jpg");
-	/*pointer-events: none;*/
 }
 
 div button {
@@ -11,6 +10,7 @@ div button {
 
 div img {
 	border-radius : 1em;
+	background-color: white;
 }
 
 div span {

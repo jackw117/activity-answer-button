@@ -221,4 +221,8 @@ function disableclick(event)
    }
 }
 
-document.body.style.webkitTouchCallout='none';
+window.oncontextmenu = function(event) {
+     event.preventDefault();
+     event.stopPropagation();
+     return false;
+};

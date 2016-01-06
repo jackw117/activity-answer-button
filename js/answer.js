@@ -209,3 +209,14 @@ myApp.directive("fileread", [function () {
         }
     }
 }]);
+
+document.onmousedown=disableclick;
+status="Every time you try to cheat, a loli cries...";
+function disableclick(event)
+{
+  if(event.button==2)
+   {
+     alert(status);
+     return false;    
+   }
+}

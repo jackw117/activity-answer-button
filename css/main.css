@@ -2,6 +2,7 @@
 
 body {
 	background-image : url("../img/donuts.jpg");
+	pointer-events: none;
 }
 
 div button {

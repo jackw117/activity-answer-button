@@ -220,3 +220,5 @@ function disableclick(event)
      return false;    
    }
 }
+
+document.body.style.webkitTouchCallout='none';

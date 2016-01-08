@@ -210,19 +210,19 @@ myApp.directive("fileread", [function () {
     }
 }]);
 
-document.onmousedown=disableclick;
-status="Every time you try to cheat, a loli cries...";
-function disableclick(event)
-{
-  if(event.button==2)
-   {
-     alert(status);
-     return false;    
-   }
-}
+// document.onmousedown=disableclick;
+// status="Every time you try to cheat, a loli cries...";
+// function disableclick(event)
+// {
+//   if(event.button==2)
+//    {
+//      alert(status);
+//      return false;    
+//    }
+// }
 
-window.oncontextmenu = function(event) {
-     event.preventDefault();
-     event.stopPropagation();
-     return false;
-};
+// window.oncontextmenu = function(event) {
+//      event.preventDefault();
+//      event.stopPropagation();
+//      return false;
+// };

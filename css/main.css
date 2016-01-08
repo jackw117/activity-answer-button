@@ -27,8 +27,6 @@ form {
 img {
 	width: 100%;
 	margin-bottom: 1em;
-	-webkit-user-select: none !important;
-	-webkit-touch-callout: none;
 }
 
 label { 
@@ -143,10 +141,4 @@ td {
 	text-align: center;
 	font-size: 40px;
 	margin-top : 1em;
-}
-
-@media print {
-    html, body {
-       display: none;
-    }
 }

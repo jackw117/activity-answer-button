@@ -132,6 +132,10 @@ td {
 	margin-bottom: 0em;
 }
 
+.removeMemberBtn {
+	margin-left: 30px;
+}
+
 .scoreboard {
 	width: 50%;
 	margin: 0 auto;
@@ -141,4 +145,8 @@ td {
 	text-align: center;
 	font-size: 40px;
 	margin-top : 1em;
+}
+
+.teamList {
+	margin-bottom: 20px;
 }

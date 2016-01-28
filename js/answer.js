@@ -5,6 +5,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var usersRef = ref.child("users");
     var answersRef = ref.child("answers");
     var adminRef = ref.child("admins");
+    var prevQuestionRef = ref.child("prevQuestion");
     var questionRef = ref.child("questions");
     var winnerRef = ref.child("winner");
     var imgRef = ref.child("img");
@@ -12,6 +13,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
     $scope.admins = $firebaseObject(adminRef);
+    $scope.prevQuestion = $firebaseArray(prevQuestionRef);
     $scope.questions = $firebaseArray(questionRef);
     $scope.winner = $firebaseArray(winnerRef);
     $scope.img = $firebaseArray(imgRef);
@@ -105,6 +107,12 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.newQuestion = function() {
+        $scope.removePrevQuestion();
+        if ($scope.questions[0] != null) {
+            $scope.prevQuestion.$add({
+                text:$scope.questions[0].text
+            });            
+        }
         $scope.removeQuestion();
         $scope.questions.$add({
             text:$scope.questionInput
@@ -117,6 +125,11 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.removeQuestion = function() {
         $scope.questions.$remove($scope.questions[0]);
         $scope.questions.$save();
+    }
+
+    $scope.removePrevQuestion = function() {
+        $scope.prevQuestion.$remove($scope.prevQuestion[0]);
+        $scope.prevQuestion.$save();
     }
 
     $scope.checkNames = function() {
@@ -176,18 +189,41 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         })
     }
 
-    $scope.addTeamMember = function() {
+    $scope.addTeamMember = function(name) {
         var current = $scope.users[$scope.userID].members;
         if (current.length === 0) {
-            $scope.users[$scope.userID].members = $scope.memberName;
+            $scope.users[$scope.userID].members = name;
         } else {
-            $scope.users[$scope.userID].members = current + ", " + $scope.memberName;
+            $scope.users[$scope.userID].members = current + ", " + name;
         }
         $scope.users.$save()
         .then(function() {
             $scope.memberName = "";
         });
-        $scope.teamMembers.push($scope.memberName);
+        checkMembers(name);
+        console.log($scope.teamMembers)
+    }
+
+    var checkMembers = function(name) {
+        var check = false;
+        $scope.teamMembers.forEach(function(data) {
+            if (name === data) {
+                check = true;
+            }
+        });
+        if (check != true) {
+            $scope.teamMembers.push(name)
+        }
+    }
+
+    $scope.removeTeamMember = function(name) {
+        var index = $scope.teamMembers.indexOf(name);
+        $scope.teamMembers.splice(index, 1);
+        $scope.users[$scope.userID].members = "";
+        $scope.users.$save();
+        $scope.teamMembers.forEach(function(data) {
+            $scope.addTeamMember(data);
+        });
     }
 });
 
@@ -210,19 +246,16 @@ myApp.directive("fileread", [function () {
     }
 }]);
 
-// document.onmousedown=disableclick;
-// status="Every time you try to cheat, a loli cries...";
-// function disableclick(event)
-// {
-//   if(event.button==2)
-//    {
-//      alert(status);
-//      return false;    
-//    }
-// }
-
-// window.oncontextmenu = function(event) {
-//      event.preventDefault();
-//      event.stopPropagation();
-//      return false;
-// };
+myApp.filter('orderObjectBy', function() {
+  return function(items, field, reverse) {
+    var filtered = [];
+    angular.forEach(items, function(item) {
+      filtered.push(item);
+    });
+    filtered.sort(function (a, b) {
+      return (a[field] > b[field] ? 1 : -1);
+    });
+    if(reverse) filtered.reverse();
+    return filtered;
+  };
+});

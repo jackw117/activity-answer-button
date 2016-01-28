@@ -23,7 +23,8 @@
         <div class="container">
             <header>
                 <div id="teamID" class="showID container" ng-show="userID && questions.length != 0">
-                    <h1>{{questions[0].text}}</h1>
+                    <h1>Previous: {{prevQuestion[0].text}}</h1>
+                    <h1>Current: {{questions[0].text}}</h1>
                     <div ng-show="img.length != 0">
                         <img id="guessImg" draggable="false" src="{{img[0].image}}">
                     </div>
@@ -79,13 +80,13 @@
                         <form name="memberForm">
                             <label for="memberName">Name (first and last):</label>
                             <input id="memberName" class="form-control" type="text" ng-model="memberName" autocomplete="off" required>
-                            <button class="btn btn-success" ng-click="addTeamMember()" type="submit" ng-disabled="memberForm.$invalid">Add Member</button>
+                            <button class="btn btn-success" ng-click="addTeamMember(memberName)" type="submit" ng-disabled="memberForm.$invalid">Add Member</button>
                         </form>
                         <button class="btn btn-warning" ng-click="teamMemberClick = false">Go Back</button>
                     </div>
                     <p ng-show="users[userID].members.length != 0">The current members on your team are:</p>
                     <ol>
-                        <li ng-repeat="member in teamMembers">{{member}}</li>
+                        <li class="teamList" ng-repeat="member in teamMembers">{{member}}<button ng-hide="!teamMemberClick" class="btn btn-xs btn-danger removeMemberBtn" ng-click="removeTeamMember(member)">Remove</button></li>
                     </ol>
                 </div>
                 
@@ -120,7 +121,7 @@
                             <th>Members</th>
                             <th>Points</th>
                         </tr>
-                        <tr ng-repeat="user in users | orderBy : 'points'">
+                        <tr ng-repeat="user in users | orderObjectBy : 'points' : reverse = true">
                             <td>{{user.handle}}</td>
                             <td>{{user.members}}</td>
                             <td>{{user.points}}</td>

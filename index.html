@@ -23,12 +23,14 @@
         <div class="container">
             <header>
                 <div id="teamID" class="showID container" ng-show="userID && questions.length != 0">
-                    <h1>Previous: {{prevQuestion[0].text}}</h1>
-                    <h1>Current: {{questions[0].text}}</h1>
-                    <div ng-show="img.length != 0">
-                        <img id="guessImg" draggable="false" src="{{img[0].image}}">
+                    <div id="questionBox">
+                        <h1>{{questions[0].text}}</h1>
+                        <div ng-show="img.length != 0">
+                            <img id="guessImg" draggable="false" src="{{img[0].image}}">
+                        </div>
+                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got the previous question ({{prevQuestion[0].text}}) correct!</h2>
+                        <h2 id="winnerName" ng-show="winner.length != 0">They answered: {{winner[0].text}}</h2>
                     </div>
-                    <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
                 </div>
             </header>
         </div>     
@@ -98,11 +100,12 @@
                             <input id="questionInput" class="form-control" type="text" ng-model="questionInput" autocomplete="off"><br>
                             <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">SUBMIT QUESTION</button>
                         </form>
-                        <button id="deleteAll" class="btn btn-warning" ng-click="removeAll(); removeWinner()">DELETE ALL ANSWERS</button>
-                        <button id="deleteQuestion" class="btn btn-warning" ng-click="removeQuestion()">DELETE QUESTION</button>
-                        <button class="btn btn-warning" ng-click="removeImg()">REMOVE IMAGE</button>
-                        <button ng-show="!showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = true">SHOW SCOREBOARD</button>
-                        <button ng-show="showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = false">HIDE SCOREBOARD</button>
+                        <button id="deleteQuestion" class="btn btn-warning" ng-click="removeQuestion()">Delete Question</button>
+                        <button class="btn btn-warning" ng-click="removeImg()">Remove Image</button>
+                        <button ng-show="!showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = true">Show Scoreboard</button>
+                        <button ng-show="showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = false">Hide Scoreboard</button>
+                        <button ng-show="!showPrev && isAdmin" class="btn btn-info" ng-click="showPrev = true">Show Previous Answers</button>
+                        <button ng-show="showPrev && isAdmin" class="btn btn-info" ng-click="showPrev = false">Hide Previous Answers</button>
                     </div>
 
                     <div>
@@ -130,7 +133,8 @@
                 </div>
                 
                 <div>
-                    <div class="answer-box" ng-repeat="answer in answers | orderBy : 'time'">
+                    <h2 ng-show="isAdmin && !showPrev">Current</h2>
+                    <div class="answer-box" ng-show="!showPrev" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
                             <span class="handle" ng-hide="admins[answer.userID] || users[answer.userID].handle === handle">{{users[answer.userID].handle}}</span>
                             <span class="adminStatus" ng-show="admins[answer.userID]">{{admins[answer.userID].handle}}</span>
@@ -149,7 +153,32 @@
                             </div>
 
                             <div>
-                                <button class="btn btn-warning" ng-click="remove(answer)">DELETE</button>
+                                <button class="btn btn-warning" ng-click="remove(answer, answers)">DELETE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 ng-show="isAdmin && showPrev">Previous</h2>
+                    <div class="answer-box" ng-show="showPrev" ng-repeat="answer in prevAnswers | orderBy : 'time'">
+                        <div>
+                            <span class="handle" ng-hide="admins[answer.userID] || users[answer.userID].handle === handle">{{users[answer.userID].handle}}</span>
+                            <span class="adminStatus" ng-show="admins[answer.userID]">{{admins[answer.userID].handle}}</span>
+                            <span id="currentUser" ng-show="users[answer.userID].handle === handle">{{users[answer.userID].handle}}</span>
+                        </div>
+
+                        <div class="answer">
+                            <p class="answerText">{{answer.text}}</p>
+                            <p class="points" ng-hide="admins[answer.userID]">Points: {{users[answer.userID].points}}</p>
+                        </div>
+
+                        <div ng-show="isAdmin">
+                            <div id="pointsDiv" ng-show="!admins[answer.userID]">
+                                <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID]); newWinner(users[answer.userID], answer.text)"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-warning" ng-click="remove(answer, prevAnswers)">DELETE</button>
                             </div>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var ref = new Firebase('https://adp-answer-button.firebaseio.com/');
     var usersRef = ref.child("users");
     var answersRef = ref.child("answers");
+    var prevAnswersRef = ref.child("prevAnswers");
     var adminRef = ref.child("admins");
     var prevQuestionRef = ref.child("prevQuestion");
     var questionRef = ref.child("questions");
@@ -12,6 +13,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
 
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
+    $scope.prevAnswers = $firebaseArray(prevAnswersRef);
     $scope.admins = $firebaseObject(adminRef);
     $scope.prevQuestion = $firebaseArray(prevQuestionRef);
     $scope.questions = $firebaseArray(questionRef);
@@ -28,6 +30,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.showScoreboard = false;
     $scope.teamMemberClick = false;
     $scope.teamMembers = [];
+    $scope.showPrev = false;
     
     var authData = $scope.authObj.$getAuth();
 
@@ -94,10 +97,11 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         });
     }
 
-    $scope.newWinner = function(user) {
+    $scope.newWinner = function(user, text) {
         $scope.removeWinner();
         $scope.winner.$add({
-            user: user.handle
+            user: user.handle,
+            text: text
         });
     }
 
@@ -108,6 +112,8 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
 
     $scope.newQuestion = function() {
         $scope.removePrevQuestion();
+        $scope.removeAll();
+        $scope.removeWinner();
         if ($scope.questions[0] != null) {
             $scope.prevQuestion.$add({
                 text:$scope.questions[0].text
@@ -155,15 +161,28 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         });
     }
 
-    $scope.remove = function(data) {
-        $scope.answers.$remove(data);
-        $scope.users.$save();
-        $scope.answers.$save();
+    $scope.remove = function(data, answer) {
+        answer.$remove(data);
+        answer.$save();
     }
 
     $scope.removeAll = function() {
+        $scope.prevAnswers.forEach(function(data) {
+            $scope.remove(data, $scope.prevAnswers);
+        })
+        $scope.addToPrev();
         $scope.answers.forEach(function(data) {
-            $scope.remove(data);
+            $scope.remove(data, $scope.answers);
+        });
+    }
+
+    $scope.addToPrev = function() {
+        $scope.answers.forEach(function(data) {
+            $scope.prevAnswers.$add({
+                userID:data.userID,
+                text:data.text,
+                time:data.time
+            });
         });
     }
 

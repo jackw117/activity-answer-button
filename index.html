@@ -28,7 +28,7 @@
                         <div ng-show="img.length != 0">
                             <img id="guessImg" draggable="false" src="{{img[0].image}}">
                         </div>
-                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got the previous question ({{prevQuestion[0].text}}) correct!</h2>
+                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
                         <h2 id="winnerName" ng-show="winner.length != 0">They answered: {{winner[0].text}}</h2>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
                     <button ng-click="checkNames()" type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary">Enter</button>
-                    <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminClick = true" class="btn btn-success">ADMIN SIGN IN</button>
+                    <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminClick = true" class="btn btn-success">Admin Sign In</button>
                 </div>
 
                 <div class="form-group"> 
@@ -58,7 +58,7 @@
                 <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off" required>
                 <label for="adminPass">Enter your password:</label>
                 <input id="adminPass" class="form-control" ng-model="adminPass" type="password" required>
-                <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">SUBMIT</button>
+                <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">Submit</button>
                 <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
                 <div>
                     <h2>You aren't an admin... go away</h2>
@@ -73,9 +73,11 @@
                             <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label>
                             <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
                             <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
-                            <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">SUBMIT ANSWER</button>
+                            <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">Submit Answer</button>
                         </form>
                         <button class="btn btn-info" ng-click="teamMemberClick = true" type="submit">Add a person to your team</button>
+                        <button ng-show="!showScoreboard" class="btn btn-info" ng-click="showScoreboard = true">Show Scoreboard</button>
+                        <button ng-show="showScoreboard" class="btn btn-info" ng-click="showScoreboard = false">Hide Scoreboard</button>
                     </div>
                     
                     <div ng-show="teamMemberClick">
@@ -98,12 +100,11 @@
                         <form name="questionForm">
                             <label for="questionInput">Enter question here:</label><br>
                             <input id="questionInput" class="form-control" type="text" ng-model="questionInput" autocomplete="off"><br>
-                            <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">SUBMIT QUESTION</button>
+                            <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">Submit Question</button>
                         </form>
                         <button id="deleteQuestion" class="btn btn-warning" ng-click="removeQuestion()">Delete Question</button>
                         <button class="btn btn-warning" ng-click="removeImg()">Remove Image</button>
-                        <button ng-show="!showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = true">Show Scoreboard</button>
-                        <button ng-show="showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = false">Hide Scoreboard</button>
+                        <button class="btn btn-warning" ng-click="removeAll()">Remove All Answers</button>
                         <button ng-show="!showPrev && isAdmin" class="btn btn-info" ng-click="showPrev = true">Show Previous Answers</button>
                         <button ng-show="showPrev && isAdmin" class="btn btn-info" ng-click="showPrev = false">Hide Previous Answers</button>
                     </div>
@@ -112,7 +113,7 @@
                         <form name="imgForm">
                             <label for="image">Pick an image:</label>
                             <input id="image" class="form-control" type="file" fileread="image">
-                            <button class="btn btn-primary" ng-click="addImg()" type="submit" ng-disabled="imgForm.$invalid">SUBMIT</button>
+                            <button class="btn btn-primary" ng-click="addImg()" type="submit" ng-disabled="imgForm.$invalid">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -148,7 +149,7 @@
 
                         <div ng-show="isAdmin">
                             <div id="pointsDiv" ng-show="!admins[answer.userID]">
-                                <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID]); newWinner(users[answer.userID])"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                <button id="increasePoints" class='btn-xs btn-danger' ng-click="addPoints(users[answer.userID]); newWinner(users[answer.userID], answer.text)"><span class="glyphicon glyphicon-arrow-up"></span></button>
                                 <button id="decreasePoints" class="btn-xs btn-danger" ng-click="decreasePoints(users[answer.userID])"><span class="glyphicon glyphicon-arrow-down"></span></button>
                             </div>
 

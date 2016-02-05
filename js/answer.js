@@ -113,7 +113,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.newQuestion = function() {
         $scope.removePrevQuestion();
         $scope.removeAll();
-        $scope.removeWinner();
         if ($scope.questions[0] != null) {
             $scope.prevQuestion.$add({
                 text:$scope.questions[0].text
@@ -167,6 +166,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     }
 
     $scope.removeAll = function() {
+        $scope.removeWinner();
         $scope.prevAnswers.forEach(function(data) {
             $scope.remove(data, $scope.prevAnswers);
         })
@@ -205,7 +205,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         $scope.removeImg();
         $scope.img.$add({
             image: $scope.image
-        })
+        });
     }
 
     $scope.addTeamMember = function(name) {

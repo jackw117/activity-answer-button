@@ -46,13 +46,13 @@ th {
 	width: 50%;
 }
 
-tr {
-	border-style: solid;
-}
-
 td {
 	padding-top: 1em;
 	padding-bottom: 1em;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
 }
 
 #adForm {
@@ -120,7 +120,7 @@ td {
 	color: purple;
 }
 
-.answer-box { 
+.answer-box, .scoreboard { 
 	background-color: white;
 	border-radius: .5em;
 	width: 100%;

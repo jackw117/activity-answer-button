@@ -28,6 +28,9 @@
                         <div ng-show="img.length != 0">
                             <img id="guessImg" draggable="false" src="{{img[0].image}}">
                         </div>
+                        <div ng-show="isAdmin && adminImg.length != 0">
+                            <img id="guessImg" draggable="false" src="{{adminImg[0].image}}">
+                        </div>
                         <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
                         <h2 id="winnerName" ng-show="winner.length != 0">They answered: {{winner[0].text}}</h2>
                     </div>
@@ -103,7 +106,7 @@
                             <button class="btn btn-primary" ng-click="newQuestion()" type="submit" ng-disabled="questionForm.$invalid">Submit Question</button>
                         </form>
                         <button id="deleteQuestion" class="btn btn-warning" ng-click="removeQuestion()">Delete Question</button>
-                        <button class="btn btn-warning" ng-click="removeImg()">Remove Image</button>
+                        <button class="btn btn-warning" ng-click="removeImg(img); removeImg(adminImg)">Remove Image</button>
                         <button class="btn btn-warning" ng-click="removeAll()">Remove All Answers</button>
                         <button ng-show="!showPrev && isAdmin" class="btn btn-info" ng-click="showPrev = true">Show Previous Answers</button>
                         <button ng-show="showPrev && isAdmin" class="btn btn-info" ng-click="showPrev = false">Hide Previous Answers</button>
@@ -113,7 +116,8 @@
                         <form name="imgForm">
                             <label for="image">Pick an image:</label>
                             <input id="image" class="form-control" type="file" fileread="image">
-                            <button class="btn btn-primary" ng-click="addImg()" type="submit" ng-disabled="imgForm.$invalid">Submit</button>
+                            <button class="btn btn-primary" ng-click="addImg(img)" type="submit" ng-disabled="imgForm.$invalid">Submit</button>
+                            <button class="btn btn-primary" ng-click="addImg(adminImg)" type="submit" ng-disabled="imgForm.$invalid">Submit (admin only)</button>
                         </form>
                     </div>
                 </div>

@@ -10,6 +10,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     var questionRef = ref.child("questions");
     var winnerRef = ref.child("winner");
     var imgRef = ref.child("img");
+    var adminImgRef = ref.child("adminImg");
 
     $scope.users = $firebaseObject(usersRef);
     $scope.answers = $firebaseArray(answersRef);
@@ -19,6 +20,7 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.questions = $firebaseArray(questionRef);
     $scope.winner = $firebaseArray(winnerRef);
     $scope.img = $firebaseArray(imgRef);
+    $scope.adminImg = $firebaseArray(adminImgRef);
 
     $scope.authObj = $firebaseAuth(ref);
 
@@ -196,14 +198,15 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         $scope.users.$save();
     }
 
-    $scope.removeImg = function() {
-        $scope.img.$remove($scope.img[0]);
-        $scope.img.$save();
+    $scope.removeImg = function(ref) {
+        ref.$remove(ref[0]);
+        ref.$save();
     }
 
-    $scope.addImg = function() {
-        $scope.removeImg();
-        $scope.img.$add({
+    $scope.addImg = function(ref) {
+        $scope.removeImg($scope.img);
+        $scope.removeImg($scope.adminImg);
+        ref.$add({
             image: $scope.image
         });
     }

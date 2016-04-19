@@ -31,8 +31,8 @@
                         <div ng-show="isAdmin && adminImg.length != 0">
                             <img id="guessImg" draggable="false" src="{{adminImg[0].image}}">
                         </div>
-                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
-                        <!-- <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got the previous question ({{prevQuestion[0].text}}) correct!</h2> -->
+                        <!-- <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2> -->
+                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got the previous question ({{prevQuestion[0].text}}) correct!</h2>
                         <h2 id="winnerName" ng-show="winner.length != 0">They answered: {{winner[0].text}}</h2>
                     </div>
                 </div>

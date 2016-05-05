@@ -31,8 +31,8 @@
                         <div ng-show="isAdmin && adminImg.length != 0">
                             <img id="guessImg" draggable="false" src="{{adminImg[0].image}}">
                         </div>
-                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2>
-                        <!-- <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got the previous question ({{prevQuestion[0].text}}) correct!</h2> -->
+                        <!-- <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got it correct!</h2> -->
+                        <h2 id="winnerName" ng-show="winner.length != 0">{{winner[0].user}} got the previous question ({{prevQuestion[0].text}}) correct!</h2>
                         <h2 id="winnerName" ng-show="winner.length != 0">They answered: {{winner[0].text}}</h2>
                     </div>
                 </div>
@@ -76,8 +76,9 @@
                         <form name="answerForm">
                             <label for="answerInput" ng-hide="isAdmin">Enter your answer here:</label>
                             <label for="answerInput" ng-show="isAdmin">Enter a message here:</label>
-                            <input id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"><br> 
-                            <button class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">Submit Answer</button>
+                            <textarea rows="5" id="answerInput" class="form-control" type="text" ng-model="answerInput" required autocomplete="off"></textarea>
+                            <br> 
+                            <button id="submitAnswer" class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">Submit Answer</button>
                         </form>
                         <button class="btn btn-info" ng-click="teamMemberClick = true" type="submit">Add a person to your team</button>
                         <button ng-show="!showScoreboard" class="btn btn-info" ng-click="showScoreboard = true">Show Scoreboard</button>
@@ -140,7 +141,7 @@
                 
                 <div>
                     <h2 ng-show="isAdmin && !showPrev">Current</h2>
-                    <div class="answer-box" ng-show="!showPrev" ng-repeat="answer in answers | orderBy : 'time'">
+                    <div class="answer-box" ng-show="(!showPrev && users[answer.userID].handle === handle) || (!showPrev && isAdmin) || (!showPrev &&admins[answer.userID])" ng-repeat="answer in answers | orderBy : 'time'">
                         <div>
                             <span class="handle" ng-hide="admins[answer.userID] || users[answer.userID].handle === handle">{{users[answer.userID].handle}}</span>
                             <span class="adminStatus" ng-show="admins[answer.userID]">{{admins[answer.userID].handle}}</span>

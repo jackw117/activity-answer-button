@@ -107,6 +107,10 @@ tr:nth-child(even) {
 	padding: 1em;
 }
 
+#submitAnswer {
+	margin-bottom: 2em;
+}
+
 #winnerName {
 	color: red;
 }

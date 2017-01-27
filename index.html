@@ -81,8 +81,8 @@
                             <button id="submitAnswer" class="btn btn-success" ng-click="teamAnswers()" type="submit" ng-disabled="answerForm.$invalid">Submit Answer</button>
                         </form>
                         <button class="btn btn-info" ng-click="teamMemberClick = true" type="submit">Add a person to your team</button>
-                        <button ng-show="!showScoreboard" class="btn btn-info" ng-click="showScoreboard = true">Show Scoreboard</button>
-                        <button ng-show="showScoreboard" class="btn btn-info" ng-click="showScoreboard = false">Hide Scoreboard</button>
+                        <button ng-show="!showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = true">Show Scoreboard</button>
+                        <button ng-show="showScoreboard && isAdmin" class="btn btn-info" ng-click="showScoreboard = false">Hide Scoreboard</button>
                     </div>
                     
                     <div ng-show="teamMemberClick">

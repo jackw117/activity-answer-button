@@ -41,16 +41,18 @@
         
         <div class="container">
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
-            <form id="myForm" name="myForm" ng-show="!userID && !adminClick">
-                <div class="form-group">
-                    <h1>ADP Trivia</h1>
-                    <label for="handle">Pick a Group Name:</label>
-                    <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
-                    <p class="error" ng-show="nameInUse">That name is already in use...</p>
-                    <button ng-click="checkNames()" type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary">Enter</button>
-                    <p id="welcomeText">Welcome to ADP Trivia! This site is for members of the Anime Discovery Project to answer trivia questions as a group and compete to win prizes during our meetings. Sign in above and start answering questions with us!</p>
-                </div>
-            </form>
+            <div id="startDiv">
+                <form id="myForm" name="myForm" ng-show="!userID && !adminClick">
+                    <div class="form-group">
+                        <h1>ADP Trivia</h1>
+                        <label for="handle">Pick a Group Name:</label>
+                        <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
+                        <p class="error" ng-show="nameInUse">That name is already in use...</p>
+                        <button ng-click="checkNames()" type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary">Enter</button>
+                        <p id="welcomeText">Welcome to ADP Trivia! This site is for members of the Anime Discovery Project to answer trivia questions as a group and compete to win prizes during our meetings. Sign in above and start answering questions with us!</p>
+                    </div>
+                </form>
+            </div>
 
             <div id="answerPage" ng-show="userID">
                 <div id="memberDiv" ng-hide="questions.length == 0">

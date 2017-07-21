@@ -39,8 +39,12 @@ img {
 	margin-bottom: 1em;
 }
 
-label, p { 
+label { 
 	font-size: 30px;
+}
+
+p {
+	font-size: 24px;
 }
 
 table {
@@ -117,12 +121,17 @@ tr:nth-child(even) {
 	padding: 1em;
 }
 
+#startDiv {
+	margin-top: 100px;
+}
+
 #submitAnswer {
 	margin-bottom: 2em;
 }
 
 #welcomeText {
 	margin-top: 30px;
+	font-weight: bold;
 }
 
 #winnerName {

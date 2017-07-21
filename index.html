@@ -43,30 +43,12 @@
             <!-- Sign-in/sign-up form: show if userId isn't defined -->
             <form id="myForm" name="myForm" ng-show="!userID && !adminClick">
                 <div class="form-group">
+                    <h1>ADP Trivia</h1>
                     <label for="handle">Pick a Group Name:</label>
                     <input id="handle" ng-model="handle" required name="handle" class="form-control" autocomplete="off">
                     <p class="error" ng-show="nameInUse">That name is already in use...</p>
                     <button ng-click="checkNames()" type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary">Enter</button>
-                    <button id="aSign" ng-hide="adminClick" type="submit" ng-click="adminClick = true" class="btn btn-success">Admin Sign In</button>
-                </div>
-
-                <div class="form-group"> 
-                    <img src="img/oshino_shinobu_cute.jpg">
-                </div>
-            </form>
-
-            <form id="adForm" name="adminForm" ng-show="adminClick && !userID">
-                <!-- <label for="adminName">NAME</label>
-                <input id="adminName" ng-model="adminName" type="text" class="form-control" autocomplete="off" required> -->
-                <label for="adminMail">Enter your email:</label>
-                <input id="adminMail" class="form-control" ng-model="adminMail" type="email" autocomplete="off" required>
-                <label for="adminPass">Enter your password:</label>
-                <input id="adminPass" class="form-control" ng-model="adminPass" type="password" required>
-                <button type="submit" class="btn btn-success" ng-click="adminSignIn()" ng-disabled="adminForm.$invalid">Submit</button>
-                <button type="submit" ng-click="adminClick = false" class="btn btn-primary">Go Back to Normal Sign In</button>
-                <div>
-                    <h2>You aren't an admin... go away</h2>
-                    <img src="img/11222148_1687453761487140_4636548506213417227_o.jpg">
+                    <p id="welcomeText">Welcome to ADP Trivia! This site is for members of the Anime Discovery Project to answer trivia questions as a group and compete to win prizes during our meetings. Sign in above and start answering questions with us!</p>
                 </div>
             </form>
 

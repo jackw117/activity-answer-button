@@ -27,8 +27,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
     $scope.ranMail = "email" + Math.random() + "@poop.com";
     $scope.password = "default";
     $scope.nameInUse = false;
-    $scope.adminClick = false;
-    $scope.isAdmin = false;
     $scope.showScoreboard = false;
     $scope.teamMemberClick = false;
     $scope.teamMembers = [];
@@ -56,28 +54,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
                 members: ""
             }
             $scope.users.$save()
-        });
-    }
-
-    $scope.adminSignUp = function() {
-        // Create user
-        $scope.authObj.$createUser({
-            email: $scope.adminMail,
-            password: $scope.adminPass,    
-        })
-
-        // Once the user is created, call the logIn function
-        .then($scope.logIn($scope.adminMail, $scope.adminPass))
-
-        // Once logged in, set and save the user data
-        .then(function(authData) {
-            $scope.userID = authData.uid;
-            $scope.admins[authData.uid] ={
-                handle: $scope.adminName
-            }
-            $scope.getName = $scope.admins[authData.uid].handle;
-            $scope.admins.$save();
-            $scope.isAdmin = true;
         });
     }
         
@@ -153,13 +129,6 @@ myApp.controller('myCtrl', function($scope, $firebaseAuth, $firebaseArray, $fire
         if (!$scope.nameInUse) {
             $scope.signUp();
         }
-    }
-
-    $scope.adminSignIn = function() {
-        $scope.logIn($scope.adminMail, $scope.adminPass).then(function(authData){
-            $scope.userID = authData.uid;
-            $scope.isAdmin = true;
-        });
     }
 
     $scope.remove = function(data, answer) {
